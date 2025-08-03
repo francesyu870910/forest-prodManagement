@@ -1,0 +1,18 @@
+{
+  "name": "forest-production-management",
+  "version": "1.0.0",
+  "description": "林业生产数字化管理系统原型",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "node backend/server.js",
+    "dev": "node backend/server.js"
+  },
+  "keywords": ["forestry", "production", "management", "prototype"],
+  "author": "林业管理系统开发团队",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}

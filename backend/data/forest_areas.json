@@ -1,0 +1,24 @@
+{
+  "forest_areas": [
+    {
+      "code": "DBPQ-001",
+      "name": "大兴安岭东北片区",
+      "location": "黑龙江省大兴安岭地区漠河市",
+      "totalArea": 1580.5,
+      "availableArea": 1245.8,
+      "plantedArea": 334.7,
+      "mainTreeSpecies": ["樟子松", "落叶松", "白桦"],
+      "createdAt": "2023-01-01T00:00:00Z"
+    },
+    {
+      "code": "XNPQ-002", 
+      "name": "大兴安岭西南片区",
+      "location": "内蒙古自治区呼伦贝尔市根河市",
+      "totalArea": 1245.2,
+      "availableArea": 980.3,
+      "plantedArea": 264.9,
+      "mainTreeSpecies": ["白桦", "杨树", "榆树"],
+      "createdAt": "2023-01-01T00:00:00Z"
+    }
+  ]
+}

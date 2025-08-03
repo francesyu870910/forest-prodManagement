@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>林业生产数字化管理系统</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>林业生产数字化管理系统</h1>
+            <div class="user-info">
+                <span>欢迎，管理员</span>
+                <button class="logout-btn">退出</button>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-item active" data-page="dashboard">系统概览</a></li>
+                <li><a href="#" class="nav-item" data-page="users">用户管理</a></li>
+                <li><a href="#" class="nav-item" data-page="planting">造林计划管理</a></li>
+                <li><a href="#" class="nav-item" data-page="cultivation">抚育作业管理</a></li>
+                <li><a href="#" class="nav-item" data-page="harvesting">采伐作业管理</a></li>
+                <li><a href="#" class="nav-item" data-page="transportation">木材运输管理</a></li>
+                <li><a href="#" class="nav-item" data-page="cost">生产成本核算</a></li>
+                <li><a href="#" class="nav-item" data-page="reports">报表统计</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- 系统概览页面 -->
+            <div id="dashboard" class="page-content active">
+                <h2>系统概览</h2>
+                
+                <!-- 核心统计卡片 -->
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-icon">🌲</div>
+                        <h3>造林计划</h3>
+                        <div class="stat-number" id="plantingCount">0</div>
+                        <div class="stat-label">个计划</div>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗ 新增6个</span>
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-icon">⚡</div>
+                        <h3>采伐作业</h3>
+                        <div class="stat-number" id="harvestingCount">0</div>
+                        <div class="stat-label">个任务</div>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗ 完成率85%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-icon">🌿</div>
+                        <h3>抚育任务</h3>
+                        <div class="stat-number" id="cultivationCount">0</div>
+                        <div class="stat-label">个任务</div>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗ 进行中5个</span>
+                        </div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-icon">🚛</div>
+                        <h3>运输记录</h3>
+                        <div class="stat-number" id="transportationCount">0</div>
+                        <div class="stat-label">条记录</div>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗ 本月新增3条</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 实时生产指标 -->
+                <div class="metrics-section">
+                    <h3>实时生产指标</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-value" id="totalArea">0</div>
+                            <div class="metric-label">总造林面积(公顷)</div>
+                            <div class="metric-chart">
+                                <div class="mini-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="totalVolume">0</div>
+                            <div class="metric-label">总采伐材积(立方米)</div>
+                            <div class="metric-chart">
+                                <div class="mini-bar" style="width: 72%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="totalSeedlings">0</div>
+                            <div class="metric-label">总苗木数量(株)</div>
+                            <div class="metric-chart">
+                                <div class="mini-bar" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="totalCost">¥0</div>
+                            <div class="metric-label">总投入成本</div>
+                            <div class="metric-chart">
+                                <div class="mini-bar" style="width: 91%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目进度概览 -->
+                <div class="progress-section">
+                    <h3>项目进度概览</h3>
+                    <div class="progress-cards">
+                        <div class="progress-card">
+                            <h4>造林项目</h4>
+                            <div class="progress-overview-item">
+                                <div class="progress-stats">
+                                    <span class="stat-badge planning">计划中: <strong id="plantingPlanned">0</strong></span>
+                                    <span class="stat-badge progress">进行中: <strong id="plantingInProgress">0</strong></span>
+                                    <span class="stat-badge completed">已完成: <strong id="plantingCompleted">0</strong></span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="plantingProgressBar" style="width: 0%"></div>
+                                    </div>
+                                    <span class="progress-percentage" id="plantingPercentage">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-card">
+                            <h4>采伐项目</h4>
+                            <div class="progress-overview-item">
+                                <div class="progress-stats">
+                                    <span class="stat-badge planning">计划中: <strong id="harvestingPlanned">0</strong></span>
+                                    <span class="stat-badge progress">进行中: <strong id="harvestingInProgress">0</strong></span>
+                                    <span class="stat-badge completed">已完成: <strong id="harvestingCompleted">0</strong></span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="harvestingProgressBar" style="width: 0%"></div>
+                                    </div>
+                                    <span class="progress-percentage" id="harvestingPercentage">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 月度统计图表 -->
+                <div class="charts-section">
+                    <h3>月度统计分析</h3>
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h4>月度成本趋势</h4>
+                            <div class="chart-container" id="monthlyCostChart">
+                                <div class="chart-y-axis"></div>
+                                <div class="chart-bars">
+                                    <!-- 将由JavaScript动态生成 -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <h4>作业类型分布</h4>
+                            <div class="pie-chart-container">
+                                <div class="pie-chart-svg"></div>
+                                <div class="pie-legend">
+                                    <!-- 将由JavaScript动态生成 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 近期活动 -->
+                <div class="activities-section">
+                    <h3>近期活动</h3>
+                    <div class="activity-list" id="recentActivities">
+                        <div class="activity-item">
+                            <div class="activity-icon success">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">2024年经济林种植项目已完成</div>
+                                <div class="activity-time">2小时前</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon warning">⚠</div>
+                            <div class="activity-content">
+                                <div class="activity-title">南部片区雨季影响造林进度</div>
+                                <div class="activity-time">4小时前</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon info">ℹ</div>
+                            <div class="activity-content">
+                                <div class="activity-title">北部片区新增灌溉作业任务</div>
+                                <div class="activity-time">1天前</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon success">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">防护林区域修剪作业完成</div>
+                                <div class="activity-time">2天前</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户管理页面 -->
+            <div id="users" class="page-content">
+                <div class="page-header">
+                    <h2>用户管理</h2>
+                    <button class="btn btn-primary" onclick="showUserForm()">添加用户</button>
+                </div>
+                <div class="table-container">
+                    <table id="usersTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>邮箱</th>
+                                <th>部门</th>
+                                <th>职位</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 造林计划管理页面 -->
+            <div id="planting" class="page-content">
+                <div class="page-header">
+                    <h2>造林计划管理</h2>
+                    <button class="btn btn-primary" onclick="showPlantingForm()">添加计划</button>
+                </div>
+                <div class="table-container">
+                    <table id="plantingTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>计划名称</th>
+                                <th>林区</th>
+                                <th>树种</th>
+                                <th>面积(公顷)</th>
+                                <th>状态</th>
+                                <th>进度</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 抚育作业管理页面 -->
+            <div id="cultivation" class="page-content">
+                <div class="page-header">
+                    <h2>抚育作业管理</h2>
+                    <button class="btn btn-primary" onclick="showCultivationForm()">添加任务</button>
+                </div>
+                <div class="table-container">
+                    <table id="cultivationTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>任务名称</th>
+                                <th>林区</th>
+                                <th>作业类型</th>
+                                <th>面积(公顷)</th>
+                                <th>状态</th>
+                                <th>费用</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 采伐作业管理页面 -->
+            <div id="harvesting" class="page-content">
+                <div class="page-header">
+                    <h2>采伐作业管理</h2>
+                    <button class="btn btn-primary" onclick="showHarvestingForm()">添加任务</button>
+                </div>
+                <div class="table-container">
+                    <table id="harvestingTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>任务名称</th>
+                                <th>林区</th>
+                                <th>许可证号</th>
+                                <th>面积(公顷)</th>
+                                <th>材积(立方米)</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 木材运输管理页面 -->
+            <div id="transportation" class="page-content">
+                <div class="page-header">
+                    <h2>木材运输管理</h2>
+                    <button class="btn btn-primary" onclick="showTransportationForm()">添加记录</button>
+                </div>
+                <div class="table-container">
+                    <table id="transportationTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>任务编号</th>
+                                <th>车辆号牌</th>
+                                <th>司机</th>
+                                <th>起点</th>
+                                <th>终点</th>
+                                <th>材积(立方米)</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 生产成本核算页面 -->
+            <div id="cost" class="page-content">
+                <div class="page-header">
+                    <h2>生产成本核算</h2>
+                    <button class="btn btn-primary" onclick="showCostForm()">添加成本记录</button>
+                </div>
+                <div class="table-container">
+                    <table id="costTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>项目名称</th>
+                                <th>成本类型</th>
+                                <th>期间</th>
+                                <th>人工成本</th>
+                                <th>材料成本</th>
+                                <th>总成本</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 报表统计页面 -->
+            <div id="reports" class="page-content">
+                <h2>报表统计</h2>
+                <div class="report-tabs">
+                    <button class="tab-btn active" onclick="showReport('production')">生产统计</button>
+                    <button class="tab-btn" onclick="showReport('cost')">成本分析</button>
+                    <button class="tab-btn" onclick="showReport('progress')">进度汇总</button>
+                </div>
+                <div id="reportContent" class="report-content"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 通用模态框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="js/services/api.js"></script>
+    <script src="js/components/navigation.js"></script>
+    <script src="js/components/dashboard.js"></script>
+    <script src="js/components/users.js"></script>
+    <script src="js/components/planting.js"></script>
+    <script src="js/components/cultivation.js"></script>
+    <script src="js/components/harvesting.js"></script>
+    <script src="js/components/transportation.js"></script>
+    <script src="js/components/cost.js"></script>
+    <script src="js/components/reports.js"></script>
+    <script src="js/utils/modal.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
